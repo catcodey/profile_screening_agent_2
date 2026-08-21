@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #F4F5F8;
+  color: #12172B;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid #2F3B73;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "Software Engineer": {
+    "required_skills": ["Python or Java or C++", "Data Structures & Algorithms", "Git", "REST APIs", "SQL", "Object-Oriented Design"],
+    "preferred_skills": ["Docker", "AWS or GCP or Azure", "CI/CD", "Unit Testing"],
+    "min_experience_years": 2,
+    "weights": {"skills": 0.5, "experience": 0.3, "education": 0.1, "achievements": 0.1}
+  },
+  "Senior Software Engineer": {
+    "required_skills": ["System Design", "Data Structures & Algorithms", "Code Review", "REST APIs", "SQL", "Mentoring"],
+    "preferred_skills": ["Microservices", "Distributed Systems", "CI/CD", "Cloud Infrastructure"],
+    "min_experience_years": 5,
+    "weights": {"skills": 0.45, "experience": 0.4, "education": 0.05, "achievements": 0.1}
+  },
+  "Frontend Developer": {
+    "required_skills": ["JavaScript", "HTML/CSS", "React or Vue or Angular", "Responsive Design", "Git", "REST API Integration"],
+    "preferred_skills": ["TypeScript", "Testing (Jest/Cypress)", "Accessibility", "Webpack/Vite"],
+    "min_experience_years": 1,
+    "weights": {"skills": 0.55, "experience": 0.25, "education": 0.1, "achievements": 0.1}
+  },
+  "Backend Developer": {
+    "required_skills": ["Server-side Language (Python/Java/Node/Go)", "Database Design", "REST or GraphQL APIs", "SQL", "Authentication/Authorization", "Git"],
+    "preferred_skills": ["Caching", "Message Queues", "Docker", "Cloud Deployment"],
+    "min_experience_years": 2,
+    "weights": {"skills": 0.5, "experience": 0.3, "education": 0.1, "achievements": 0.1}
+  },
+  "Full Stack Developer": {
+    "required_skills": ["JavaScript", "Frontend Framework (React/Vue/Angular)", "Backend Language", "Database (SQL/NoSQL)", "REST APIs", "Git"],
+    "preferred_skills": ["TypeScript", "Docker", "Cloud Deployment", "CI/CD"],
+    "min_experience_years": 2,
+    "weights": {"skills": 0.5, "experience": 0.3, "education": 0.1, "achievements": 0.1}
+  },
+  "Data Scientist": {
+    "required_skills": ["Python or R", "Statistics", "Machine Learning", "SQL", "Data Visualization", "Pandas/NumPy"],
+    "preferred_skills": ["Deep Learning", "A/B Testing", "Big Data Tools (Spark)", "MLOps"],
+    "min_experience_years": 2,
+    "weights": {"skills": 0.5, "experience": 0.25, "education": 0.15, "achievements": 0.1}
+  },
+  "Data Analyst": {
+    "required_skills": ["SQL", "Excel", "Data Visualization (Tableau/Power BI)", "Statistics Basics", "Python or R"],
+    "preferred_skills": ["A/B Testing", "Dashboarding", "ETL Basics", "Business Acumen"],
+    "min_experience_years": 1,
+    "weights": {"skills": 0.5, "experience": 0.25, "education": 0.15, "achievements": 0.1}
+  },
+  "Machine Learning Engineer": {
+    "required_skills": ["Python", "Machine Learning Algorithms", "Deep Learning Frameworks (PyTorch/TensorFlow)", "Model Deployment", "SQL", "Data Pipelines"],
+    "preferred_skills": ["MLOps", "Cloud ML Platforms", "Distributed Training", "Feature Engineering"],
+    "min_experience_years": 2,
+    "weights": {"skills": 0.55, "experience": 0.25, "education": 0.1, "achievements": 0.1}
+  },
+  "DevOps Engineer": {
+    "required_skills": ["CI/CD Pipelines", "Docker", "Kubernetes", "Cloud Platforms (AWS/GCP/Azure)", "Infrastructure as Code", "Linux/Shell Scripting"],
+    "preferred_skills": ["Monitoring/Observability", "Terraform", "Security Practices", "Scripting (Python/Go)"],
+    "min_experience_years": 2,
+    "weights": {"skills": 0.55, "experience": 0.3, "education": 0.05, "achievements": 0.1}
+  },
+  "Product Manager": {
+    "required_skills": ["Product Roadmapping", "Stakeholder Management", "User Research", "Prioritization Frameworks", "Data-Informed Decision Making", "Cross-functional Collaboration"],
+    "preferred_skills": ["A/B Testing", "SQL Basics", "Agile/Scrum", "Product Analytics Tools"],
+    "min_experience_years": 3,
+    "weights": {"skills": 0.4, "experience": 0.35, "education": 0.1, "achievements": 0.15}
+  },
+  "UI/UX Designer": {
+    "required_skills": ["User Research", "Wireframing/Prototyping", "Figma or Sketch", "Interaction Design", "Design Systems", "Usability Testing"],
+    "preferred_skills": ["Accessibility (WCAG)", "Motion Design", "Front-end Basics (HTML/CSS)", "User Journey Mapping"],
+    "min_experience_years": 2,
+    "weights": {"skills": 0.55, "experience": 0.25, "education": 0.1, "achievements": 0.1}
+  },
+  "QA Engineer": {
+    "required_skills": ["Test Case Design", "Manual Testing", "Automated Testing Tools (Selenium/Cypress)", "Bug Tracking", "API Testing", "SQL Basics"],
+    "preferred_skills": ["CI/CD Integration", "Performance Testing", "Scripting (Python/JS)", "Test Strategy"],
+    "min_experience_years": 1,
+    "weights": {"skills": 0.5, "experience": 0.3, "education": 0.1, "achievements": 0.1}
+  },
+  "Business Analyst": {
+    "required_skills": ["Requirements Gathering", "SQL", "Process Mapping", "Stakeholder Communication", "Data Analysis", "Documentation"],
+    "preferred_skills": ["Excel/Power BI", "Agile/Scrum", "Business Case Development", "Wireframing Basics"],
+    "min_experience_years": 2,
+    "weights": {"skills": 0.4, "experience": 0.3, "education": 0.15, "achievements": 0.15}
+  },
+  "HR Manager": {
+    "required_skills": ["Recruitment & Onboarding", "Employee Relations", "HR Policy & Compliance", "Performance Management", "Conflict Resolution", "HRIS Systems"],
+    "preferred_skills": ["Compensation & Benefits", "Training & Development", "Labor Law Knowledge", "Diversity & Inclusion Initiatives"],
+    "min_experience_years": 3,
+    "weights": {"skills": 0.4, "experience": 0.35, "education": 0.1, "achievements": 0.15}
+  },
+  "Sales Executive": {
+    "required_skills": ["Lead Generation", "Negotiation", "CRM Tools", "Pipeline Management", "Client Relationship Management", "Communication"],
+    "preferred_skills": ["Cold Calling/Outreach", "Sales Forecasting", "Industry Domain Knowledge", "Presentation Skills"],
+    "min_experience_years": 2,
+    "weights": {"skills": 0.35, "experience": 0.35, "education": 0.05, "achievements": 0.25}
+  },
+  "Marketing Manager": {
+    "required_skills": ["Campaign Strategy", "Digital Marketing", "Content Strategy", "Analytics (GA/Meta/Google Ads)", "Budget Management", "Brand Management"],
+    "preferred_skills": ["SEO/SEM", "Marketing Automation Tools", "Social Media Strategy", "A/B Testing"],
+    "min_experience_years": 3,
+    "weights": {"skills": 0.4, "experience": 0.35, "education": 0.1, "achievements": 0.15}
+  },
+  "Cloud Architect": {
+    "required_skills": ["Cloud Platform Expertise (AWS/GCP/Azure)", "System & Solution Architecture", "Networking & Security", "Infrastructure as Code", "Cost Optimization", "Migration Planning"],
+    "preferred_skills": ["Kubernetes", "Multi-cloud Strategy", "Compliance Frameworks", "Disaster Recovery Design"],
+    "min_experience_years": 5,
+    "weights": {"skills": 0.5, "experience": 0.35, "education": 0.05, "achievements": 0.1}
+  },
+  "Cybersecurity Analyst": {
+    "required_skills": ["Threat Detection & Monitoring", "Incident Response", "Vulnerability Assessment", "Security Tools (SIEM)", "Network Security", "Risk Assessment"],
+    "preferred_skills": ["Penetration Testing", "Security Certifications (CISSP/CEH)", "Compliance (ISO 27001/SOC2)", "Scripting for Automation"],
+    "min_experience_years": 2,
+    "weights": {"skills": 0.5, "experience": 0.3, "education": 0.1, "achievements": 0.1}
+  }
+}
