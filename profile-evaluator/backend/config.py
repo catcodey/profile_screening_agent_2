@@ -7,7 +7,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    
+    groq_api_key: str = "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"
     groq_model: str = "qwen/qwen3.6-27b"
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
     max_upload_mb: int = 5

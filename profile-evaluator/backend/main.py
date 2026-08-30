@@ -7,10 +7,17 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
+import database
 from config import get_settings
 from models.schemas import EvaluationResult
 from services.file_parser import validate_extension, extract_text
-from services.guardrails import sanitize_role, validate_and_clean_text, sanitize_experience_range, EXPERIENCE_RANGES
+from services.guardrails import (
+    sanitize_role,
+    validate_and_clean_text,
+    sanitize_experience_range,
+    sanitize_skills,
+    EXPERIENCE_RANGES,
+)
 from services.llm_service import evaluate_profile, generate_standalone_questions
 
 logging.basicConfig(level=logging.INFO)
@@ -22,7 +29,7 @@ limiter = Limiter(key_func=get_remote_address)
 app = FastAPI(
     title="Profile Evaluator API",
     description="Evaluates candidate profiles against a target role using an LLM.",
-    version="1.0.0",
+    version="1.1.0",
 )
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
@@ -34,6 +41,12 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+
+
+@app.on_event("startup")
+def _on_startup():
+    database.init_db()
+
 
 COMMON_ROLES = [
     "Software Engineer",
@@ -57,8 +70,7 @@ COMMON_ROLES = [
     "Sales Executive",
     "Marketing Manager",
     "Cloud Architect",
-    "Cybersecurity Analyst"
-    
+    "Cybersecurity Analyst",
 ]
 
 
@@ -85,9 +97,13 @@ async def evaluate(
     request: Request,
     role: str = Form(...),
     file: UploadFile = File(...),
+    skills: str = Form(""),
 ):
     # --- Guardrail: role input ---
     clean_role = sanitize_role(role)
+
+    # --- Optional extra context: blank means "not provided" ---
+    clean_skills = sanitize_skills(skills)
 
     # --- Guardrail: file presence / type ---
     if not file.filename:
@@ -109,8 +125,29 @@ async def evaluate(
     clean_text = validate_and_clean_text(raw_text)
 
     # --- Evaluate via LLM ---
-    logger.info("Evaluating profile for role='%s' (%d chars)", clean_role, len(clean_text))
-    result = evaluate_profile(clean_role, clean_text)
+    logger.info(
+        "Evaluating profile for role='%s' (%d chars), skills_provided=%s",
+        clean_role,
+        len(clean_text),
+        bool(clean_skills),
+    )
+    result = evaluate_profile(clean_role, clean_text, skills=clean_skills or "")
+
+    # --- Persist for the Dashboard/Analytics tabs. Best-effort: a DB hiccup
+    # must never break the evaluation response the user is waiting on. ---
+    try:
+        database.insert_evaluation(
+            candidate_name=result.candidate_name,
+            role=result.role,
+            score=result.score,
+            verdict=result.verdict.value,
+            summary=result.summary,
+            skills_considered=clean_skills,
+            gap_analysis=[g.model_dump() for g in result.gap_analysis] if result.gap_analysis else None,
+        )
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Failed to persist evaluation to database: %s", exc)
+
     return result
 
 
@@ -120,26 +157,53 @@ async def generate_questions(
     request: Request,
     role: str = Form(...),
     experience_range: str = Form(...),
+    skills: str = Form(""),
 ):
     """
     Standalone question generator — no file, no score. Always available.
     Used when the recruiter wants role-based screening questions calibrated to
     a manually chosen experience range, independent of any specific candidate.
+    `skills` is optional — when blank, questions come purely from the model's
+    own knowledge of the role.
     """
     clean_role = sanitize_role(role)
     clean_experience_range = sanitize_experience_range(experience_range)
+    clean_skills = sanitize_skills(skills)
 
     logger.info(
-        "Generating standalone questions for role='%s', experience='%s'",
+        "Generating standalone questions for role='%s', experience='%s', skills_provided=%s",
         clean_role,
         clean_experience_range,
+        bool(clean_skills),
     )
-    questions = generate_standalone_questions(clean_role, clean_experience_range)
+    questions = generate_standalone_questions(clean_role, clean_experience_range, skills=clean_skills or "")
     return {
         "role": clean_role,
         "experience_range": clean_experience_range,
         "questions": questions,
     }
+
+
+# ---------------------------------------------------------------------------
+# DASHBOARD & ANALYTICS ENDPOINTS
+# ---------------------------------------------------------------------------
+
+@app.get("/api/dashboard/stats")
+def dashboard_stats():
+    """Summary counts for the Dashboard tab's top cards."""
+    return database.get_stats()
+
+
+@app.get("/api/dashboard/evaluations")
+def dashboard_evaluations(limit: int = 200):
+    """Row-level evaluation history for the Dashboard tab's detailed view."""
+    return {"evaluations": database.get_evaluations(limit=limit)}
+
+
+@app.get("/api/dashboard/role-distribution")
+def dashboard_role_distribution():
+    """Evaluation count + average score per role, for the Analytics tab's bar chart."""
+    return {"role_distribution": database.get_role_distribution()}
 
 
 @app.exception_handler(HTTPException)
