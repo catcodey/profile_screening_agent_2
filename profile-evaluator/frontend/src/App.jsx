@@ -10,14 +10,16 @@ export default function App() {
   return (
     <div className="app-shell">
       <header className="app-header">
-        <div className="brand">
+        <div className="brand" aria-label="Profile Evaluator brand">
           <div className="brand-mark">PE</div>
-          <div>
-            <p className="brand-title">Profile Evaluator</p>
-            <p className="brand-sub">AI-assisted candidate screening</p>
-          </div>
         </div>
-        <span className="header-tag">Groq-powered</span>
+
+        <div className="brand-copy">
+          <p className="brand-title">NexaHire</p>
+          <p className="brand-sub">AI-assisted candidate screening</p>
+        </div>
+
+        {/* <span className="header-tag">Groq-powered</span> */}
       </header>
 
       <nav className="app-tabs" aria-label="Main navigation">
