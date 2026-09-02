@@ -25,9 +25,9 @@
 
 /* ---------- Header ---------- */
 .app-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   padding: 18px 40px;
   background: var(--c-ink);
   color: #fff;
@@ -36,7 +36,12 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-self: start;
+}
+
+.brand-copy {
+  justify-self: center;
+  text-align: center;
 }
 
 .brand-mark {
